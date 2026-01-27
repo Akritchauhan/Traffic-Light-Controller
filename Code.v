@@ -96,7 +96,7 @@ module traffic_light(
     ew = 2'b00;
 
     case (state)
-      S0: begin ns = 2'b10; ew = 2'b00; end
+      S0: begin ns = 2'b10; ew = 2'b00; end   //00=green,01=yellow,10=red;
       S1: begin ns = 2'b01; ew = 2'b00; end
       S2: begin ns = 2'b00; ew = 2'b10; end
       S3: begin ns = 2'b00; ew = 2'b01; end
