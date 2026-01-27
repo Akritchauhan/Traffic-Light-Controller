@@ -57,3 +57,51 @@ module signals(
         endcase
     end
 endmodule
+
+
+
+// other code
+module traffic_light(
+  input clk,
+  input rst,
+  output reg [1:0] ns,
+  output reg [1:0] ew);
+  
+  parameter S0 = 2'b00,  // NS GREEN, EW RED
+            S1 = 2'b01,  // NS YELLOW, EW RED
+            S2 = 2'b10,  // NS RED, EW GREEN
+            S3 = 2'b11;  // NS RED, EW YELLOW
+  
+  reg [1:0] state,nstate;
+  
+  always @(posedge clk)begin
+    if(rst)
+      state<=S0;
+  else
+    state<=nstate;
+  end
+  
+  always @(*)begin
+    case(state)
+      S0:nstate=S1;
+      S1:nstate=S2;
+      S2:nstate=S3;
+      S3:nstate=S0;
+      default:nstate=S0;
+    endcase
+  end
+  
+  always @(*)begin
+    ns = 2'b00;
+    ew = 2'b00;
+
+    case (state)
+      S0: begin ns = 2'b10; ew = 2'b00; end
+      S1: begin ns = 2'b01; ew = 2'b00; end
+      S2: begin ns = 2'b00; ew = 2'b10; end
+      S3: begin ns = 2'b00; ew = 2'b01; end
+    endcase
+  end
+
+endmodule
+      
